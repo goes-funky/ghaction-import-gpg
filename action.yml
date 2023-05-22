@@ -13,6 +13,9 @@ inputs:
   passphrase:
     description: 'Passphrase of the GPG private key'
     required: false
+  trust_level:
+    description: "Set key's trust level"
+    required: false
   git_config_global:
     description: 'Set Git config global'
     default: 'false'
@@ -52,6 +55,8 @@ outputs:
     description: 'Fingerprint of the GPG key (recommended as user ID)'
   keyid:
     description: 'Low 64 bits of the X.509 certificate SHA-1 fingerprint'
+  name:
+    description: 'Name associated with the GPG key'
   email:
     description: 'Email address associated with the GPG key'
 

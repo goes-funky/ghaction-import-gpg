@@ -1,9 +1,9 @@
 import * as core from '@actions/core';
-import {issueCommand} from '@actions/core/lib/command';
 
 export interface Inputs {
   gpgPrivateKey: string;
   passphrase: string;
+  trustLevel: string;
   gitConfigGlobal: boolean;
   gitUserSigningkey: boolean;
   gitCommitGpgsign: boolean;
@@ -19,6 +19,7 @@ export async function getInputs(): Promise<Inputs> {
   return {
     gpgPrivateKey: core.getInput('gpg_private_key', {required: true}),
     passphrase: core.getInput('passphrase'),
+    trustLevel: core.getInput('trust_level'),
     gitConfigGlobal: core.getBooleanInput('git_config_global'),
     gitUserSigningkey: core.getBooleanInput('git_user_signingkey'),
     gitCommitGpgsign: core.getBooleanInput('git_commit_gpgsign'),
@@ -29,9 +30,4 @@ export async function getInputs(): Promise<Inputs> {
     workdir: core.getInput('workdir') || '.',
     fingerprint: core.getInput('fingerprint')
   };
-}
-
-// FIXME: Temp fix https://github.com/actions/toolkit/issues/777
-export function setOutput(name: string, value: any): void {
-  issueCommand('set-output', {name}, value);
 }

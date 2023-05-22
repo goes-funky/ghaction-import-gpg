@@ -81,15 +81,23 @@ async function run(): Promise<void> {
       });
     }
 
+    if (inputs.trustLevel) {
+      await core.group(`Setting key's trust level`, async () => {
+        await gpg.setTrustLevel(privateKey.keyID, inputs.trustLevel).then(() => {
+          core.info(`Trust level set to ${inputs.trustLevel} for ${privateKey.keyID}`);
+        });
+      });
+    }
+
     await core.group(`Setting outputs`, async () => {
       core.info(`fingerprint=${fingerprint}`);
-      context.setOutput('fingerprint', fingerprint);
+      core.setOutput('fingerprint', fingerprint);
       core.info(`keyid=${privateKey.keyID}`);
-      context.setOutput('keyid', privateKey.keyID);
+      core.setOutput('keyid', privateKey.keyID);
       core.info(`name=${privateKey.name}`);
-      context.setOutput('name', privateKey.name);
+      core.setOutput('name', privateKey.name);
       core.info(`email=${privateKey.email}`);
-      context.setOutput('email', privateKey.email);
+      core.setOutput('email', privateKey.email);
     });
 
     if (inputs.gitUserSigningkey) {
